@@ -1,0 +1,3 @@
+[submodule "client/ktdash_frontend"]
+	path = client/ktdash_frontend
+	url = git@github.com:nartr1/ktdash_frontend.git
