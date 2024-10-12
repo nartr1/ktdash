@@ -1,3 +1,8 @@
+/*
+  Script for dumping relevant tables for dataseeding:
+    sudo mysqldump killteam Faction Killteam Fireteam Operative TacOp Ability Equipment Ploy UniqueAction Weapon WeaponProfile > dataseeding.sql
+*/
+
 -- MySQL dump 10.13  Distrib 8.0.39, for Linux (x86_64)
 --
 -- Host: localhost    Database: killteam
