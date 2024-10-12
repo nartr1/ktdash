@@ -8,6 +8,10 @@ services:
     stdin_open: true
     tty: true
     command: python3 run.py
+    depends_on:
+      - db
+    links:
+      - db
   frontend:
     build: ./ktdash_frontend
     volumes:
@@ -21,3 +25,21 @@ services:
     depends_on:
       - backend
     command: npm start
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: ktdash_database
+    ports:
+     - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - "./server/db/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=superSecretPassword
+      - MYSQL_DATABASE=killteam
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+volumes:
+  db:
+    driver: local
