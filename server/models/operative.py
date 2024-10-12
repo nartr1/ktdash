@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import List
 
 from models.weapon import Weapon
+from models.equipment import Equipment
 
 class Operative(BaseModel):
     factionid: str
@@ -17,3 +18,4 @@ class Operative(BaseModel):
     SV: str
     W: str
     weapons: List[Weapon]
+    equipments: List[Equipment]
