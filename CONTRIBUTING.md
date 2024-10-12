@@ -42,11 +42,12 @@ Documentation is automatically generated using `redoc` from the code and is acce
 
 The code is organized into the following directories:
 
-* `app`: contains the FastAPI application code
-* `models`: contains the Pydantic models used for data validation
-* `routes`: contains the API endpoint definitions
-* `services`: contains the business logic for the application
-* `static`: contains generated frontend code (see [KTDash Frontend](./ktdash_backend/ktdash_frontend/README.md) for more information)
+* `server/run.py`: contains the FastAPI application code
+* `server/models`: contains the Pydantic models used for data validation
+* `server/routes`: contains the API endpoint definitions
+* `server/services`: contains the business logic for the application
+* `server/db`: contains the schema and setup code for the database (MySQL 8.0)
+* `server/static`: contains generated frontend code (see [KTDash Frontend](./ktdash_backend/ktdash_frontend/README.md) for more information)
 
 ## Branching Strategy
 
