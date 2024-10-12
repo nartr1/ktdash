@@ -9,9 +9,9 @@ services:
     tty: true
     command: python3 run.py
   frontend:
-    build: ./client/ktdash_frontend
+    build: ./ktdash_frontend
     volumes:
-      - ./client/ktdash_frontend:/app
+      - ./ktdash_frontend:/app
       # One-way volume to use node_modules from inside image
       - /app/node_modules
     ports:
