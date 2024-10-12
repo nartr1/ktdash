@@ -26,6 +26,12 @@ docker compose up
 ```
 This will build and configure the 3 services (frontend, backend, database) from the `.env.dev` settings.
 
+To rebuild the containers without cached dependencies, use the following:
+```bash
+docker compose build --nocache
+```
+
+
 ### Running locally
 
 The backend can be run locally (after [installing the requirements](#getting-started)) with the following:
