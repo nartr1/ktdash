@@ -21,14 +21,14 @@ app.include_router(user_router)
 def home():
     return "Hello, World!"  # Return this message back to the browser
 
+SETTINGS = Settings()
 
 if (
     __name__ == "__main__"
 ):  # If the script that was run is this script (we have not been imported)
-    settings = Settings()
     uvicorn.run(
         "run:app",
-        host=settings.host,
-        port=settings.port,
-        reload=settings.hot_reload,
+        host=SETTINGS.host,
+        port=SETTINGS.port,
+        reload=SETTINGS.hot_reload,
     )  # Start the server
