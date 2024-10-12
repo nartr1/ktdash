@@ -1,12 +1,20 @@
 from fastapi import APIRouter
+from db.engine import SessionDep
+from db.schema import Faction
+from sqlmodel import select
 
 killteams_router = APIRouter(prefix="/api")
 
 
 @killteams_router.get("/faction")
-def get_factions():
+def get_factions(session: SessionDep):
     # Return an array of all factions
-    return {}
+    statement = select(Faction)
+    result = session.exec(statement)
+
+    results = result.fetchall()
+        
+    return results
 
 
 @killteams_router.get("/faction")

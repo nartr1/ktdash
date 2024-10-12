@@ -6,6 +6,7 @@ from routes.killteams import killteams_router
 from routes.rosters import rosters_router
 from routes.session import sessions_router
 from routes.user import user_router
+from models.settings import SETTINGS
 
 app = FastAPI()
 base_router = APIRouter()
@@ -20,8 +21,6 @@ app.include_router(user_router)
 @base_router.get("/")  # When someone goes to / on the server, execute the following function
 def home():
     return "Hello, World!"  # Return this message back to the browser
-
-SETTINGS = Settings()
 
 if (
     __name__ == "__main__"
