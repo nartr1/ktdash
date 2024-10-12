@@ -8,7 +8,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 metadata = SQLModel.metadata
 
-
+#Test
 class Equipment(SQLModel, table=True):
     __tablename__ = 'Equipment'
     __table_args__ = (
