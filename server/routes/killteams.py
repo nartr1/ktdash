@@ -13,12 +13,12 @@ def get_factions(session: SessionDep):
     result = session.exec(statement)
 
     results = result.fetchall()
-        
+
     return results
 
 
 @killteams_router.get("/faction")
-def get_faction(fa: str):
+def get_faction(fa: str, session: SessionDep):
     # Return the requested faction
     faction_id = fa
     # Implement your logic here to fetch the faction with the given ID
@@ -26,13 +26,13 @@ def get_faction(fa: str):
 
 
 @killteams_router.get("/killteam")
-def get_killteams():
+def get_killteams(session: SessionDep):
     # Return an array of all killteams
     pass
 
 
 @killteams_router.get("/killteam")
-def get_killteam(fa: str, kt: str):
+def get_killteam(fa: str, kt: str, session: SessionDep):
     # Return the requested killteam
     faction_id = fa
     killteam_id = kt
@@ -41,13 +41,13 @@ def get_killteam(fa: str, kt: str):
 
 
 @killteams_router.get("/fireteam")
-def get_fireteams():
+def get_fireteams(session: SessionDep):
     # Return an array of all fireteams
     pass
 
 
 @killteams_router.get("/fireteam")
-def get_fireteam(fa: str, kt: str, ft: str):
+def get_fireteam(fa: str, kt: str, ft: str, session: SessionDep):
     # Return the requested fireteam
     faction_id = fa
     killteam_id = kt
@@ -57,13 +57,13 @@ def get_fireteam(fa: str, kt: str, ft: str):
 
 
 @killteams_router.get("/operative")
-def get_operatives():
+def get_operatives(session: SessionDep):
     # Return an array of all operatives
     pass
 
 
 @killteams_router.get("/operative")
-def get_operative(fa: str, kt: str, ft: str, op: str):
+def get_operative(fa: str, kt: str, ft: str, op: str, session: SessionDep):
     # Return the requested operative
     faction_id = fa
     killteam_id = kt

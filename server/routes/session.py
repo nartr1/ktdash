@@ -1,15 +1,17 @@
 from fastapi import APIRouter
+from db.engine import SessionDep
 
 sessions_router = APIRouter(prefix="/api/sessions")
 
+
 @sessions_router.get("/")
-def get_sessions():
+def get_sessions(session: SessionDep):
     # Return a list of all sessions
     pass
 
 
 @sessions_router.post("/")
-def create_session():
+def create_session(session: SessionDep):
     # Create a new session
 
     # Implement your logic here to create a new session
@@ -17,13 +19,13 @@ def create_session():
 
 
 @sessions_router.get("/{session_id}")
-def get_session(session_id):
+def get_session(session_id, session: SessionDep):
     # Return the session with the given ID
     pass
 
 
 @sessions_router.put("/{session_id}")
-def update_session(session_id):
+def update_session(session_id, session: SessionDep):
     # Update the session with the given ID
 
     # Implement your logic here to update the session
@@ -31,6 +33,6 @@ def update_session(session_id):
 
 
 @sessions_router.delete("/{session_id}")
-def delete_session(session_id):
+def delete_session(session_id, session: SessionDep):
     # Delete the session with the given ID
     pass
