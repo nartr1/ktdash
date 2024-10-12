@@ -1,56 +1,65 @@
-from __main__ import app
-from flask import request
+from fastapi import APIRouter
 
-@app.route('/api/faction', methods=['GET'])
+killteams_router = APIRouter(prefix="/api")
+
+
+@killteams_router.get("/faction")
 def get_factions():
     # Return an array of all factions
     return {}
 
-@app.route('/api/faction', methods=['GET'])
-def get_faction():
+
+@killteams_router.get("/faction")
+def get_faction(fa: str):
     # Return the requested faction
-    faction_id = request.args.get('fa')
+    faction_id = fa
     # Implement your logic here to fetch the faction with the given ID
     pass
 
-@app.route('/api/killteam', methods=['GET'])
+
+@killteams_router.get("/killteam")
 def get_killteams():
     # Return an array of all killteams
     pass
 
-@app.route('/api/killteam', methods=['GET'])
-def get_killteam():
+
+@killteams_router.get("/killteam")
+def get_killteam(fa: str, kt: str):
     # Return the requested killteam
-    faction_id = request.args.get('fa')
-    killteam_id = request.args.get('kt')
+    faction_id = fa
+    killteam_id = kt
     # Implement your logic here to fetch the killteam with the given IDs
     pass
 
-@app.route('/api/fireteam', methods=['GET'])
+
+@killteams_router.get("/fireteam")
 def get_fireteams():
     # Return an array of all fireteams
     pass
 
-@app.route('/api/fireteam', methods=['GET'])
-def get_fireteam():
+
+@killteams_router.get("/fireteam")
+def get_fireteam(fa: str, kt: str, ft: str):
     # Return the requested fireteam
-    faction_id = request.args.get('fa')
-    killteam_id = request.args.get('kt')
-    fireteam_id = request.args.get('ft')
+    faction_id = fa
+    killteam_id = kt
+    fireteam_id = ft
     # Implement your logic here to fetch the fireteam with the given IDs
     pass
 
-@app.route('/api/operative', methods=['GET'])
+
+@killteams_router.get("/operative")
 def get_operatives():
     # Return an array of all operatives
     pass
 
-@app.route('/api/operative', methods=['GET'])
-def get_operative():
+
+@killteams_router.get("/operative")
+def get_operative(fa: str, kt: str, ft: str, op: str):
     # Return the requested operative
-    faction_id = request.args.get('fa')
-    killteam_id = request.args.get('kt')
-    fireteam_id = request.args.get('ft')
-    operative_id = request.args.get('op')
+    faction_id = fa
+    killteam_id = kt
+    fireteam_id = ft
+    operative_id = op
     # Implement your logic here to fetch the operative with the given IDs
     pass

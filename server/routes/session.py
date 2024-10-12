@@ -1,30 +1,36 @@
-from __main__ import app
+from fastapi import APIRouter
 
-@app.route('/api/sessions', methods=['GET'])
+sessions_router = APIRouter(prefix="/api/sessions")
+
+@sessions_router.get("/")
 def get_sessions():
     # Return a list of all sessions
     pass
 
-@app.route('/api/sessions', methods=['POST'])
+
+@sessions_router.post("/")
 def create_session():
     # Create a new session
-    data = request.get_json()
+
     # Implement your logic here to create a new session
     pass
 
-@app.route('/api/sessions/<int:session_id>', methods=['GET'])
+
+@sessions_router.get("/{session_id}")
 def get_session(session_id):
     # Return the session with the given ID
     pass
 
-@app.route('/api/sessions/<int:session_id>', methods=['PUT'])
+
+@sessions_router.put("/{session_id}")
 def update_session(session_id):
     # Update the session with the given ID
-    data = request.get_json()
+
     # Implement your logic here to update the session
     pass
 
-@app.route('/api/sessions/<int:session_id>', methods=['DELETE'])
+
+@sessions_router.delete("/{session_id}")
 def delete_session(session_id):
     # Delete the session with the given ID
     pass

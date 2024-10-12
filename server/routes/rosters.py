@@ -1,30 +1,36 @@
-from __main__ import app
+from fastapi import APIRouter
 
-@app.route('/api/rosters', methods=['GET'])
+rosters_router = APIRouter(prefix="/api/rosters")
+
+@rosters_router.get("/")
 def get_rosters():
     # Return a list of all rosters
     pass
 
-@app.route('/api/rosters', methods=['POST'])
+
+@rosters_router.post("/")
 def create_roster():
     # Create a new roster
-    data = request.get_json()
+
     # Implement your logic here to create a new roster
     pass
 
-@app.route('/api/rosters/<int:roster_id>', methods=['GET'])
-def get_roster(roster_id):
+
+@rosters_router.get("/{roster_id}")
+def get_roster(roster_id: str):
     # Return the roster with the given ID
     pass
 
-@app.route('/api/rosters/<int:roster_id>', methods=['PUT'])
-def update_roster(roster_id):
+
+@rosters_router.put("/{roster_id}")
+def update_roster(roster_id: str):
     # Update the roster with the given ID
-    data = request.get_json()
+
     # Implement your logic here to update the roster
     pass
 
-@app.route('/api/rosters/<int:roster_id>', methods=['DELETE'])
-def delete_roster(roster_id):
+
+@rosters_router.delete("/{roster_id}")
+def delete_roster(roster_id: str):
     # Delete the roster with the given ID
     pass

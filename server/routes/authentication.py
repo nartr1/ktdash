@@ -1,21 +1,26 @@
-from __main__ import app
+from fastapi import APIRouter
 
-@app.route('/api/auth/login', methods=['POST'])
+authentication_router = APIRouter(prefix="/api/auth")
+
+@authentication_router.post("/login")
 def login():
     # Login a user
-    data = request.get_json()
+
     # Implement your logic here to login a user
     pass
 
-@app.route('/api/auth/logout', methods=['POST'])
+
+@authentication_router.post("/logout")
 def logout():
     # Logout a user
+
     # Implement your logic here to logout a user
     pass
 
-@app.route('/api/auth/register', methods=['POST'])
+
+@authentication_router.post("/register")
 def register():
     # Register a new user
-    data = request.get_json()
+
     # Implement your logic here to register a new user
     pass

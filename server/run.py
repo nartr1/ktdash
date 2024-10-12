@@ -1,18 +1,34 @@
-from flask import Flask  # Import flask
+import uvicorn
+from fastapi import FastAPI, APIRouter
+from models.settings import Settings
+from routes.authentication import authentication_router
+from routes.killteams import killteams_router
+from routes.rosters import rosters_router
+from routes.session import sessions_router
+from routes.user import user_router
 
-app = Flask(__name__, static_url_path='') # Setup the flask app by creating an instance of Flask
+app = FastAPI()
+base_router = APIRouter()
 
-import routes.authentication
-import routes.killteams
-import routes.rosters
-import routes.roster_operatives
-import routes.session
-import routes.user
+app.include_router(base_router)
+app.include_router(authentication_router)
+app.include_router(killteams_router)
+app.include_router(rosters_router)
+app.include_router(sessions_router)
+app.include_router(user_router)
 
-@app.route('/')  # When someone goes to / on the server, execute the following function
+@base_router.get("/")  # When someone goes to / on the server, execute the following function
 def home():
-    return 'Hello, World!'  # Return this message back to the browser
+    return "Hello, World!"  # Return this message back to the browser
 
 
-if __name__ == '__main__':  # If the script that was run is this script (we have not been imported)
-    app.run(port=8000)  # Start the server
+if (
+    __name__ == "__main__"
+):  # If the script that was run is this script (we have not been imported)
+    settings = Settings()
+    uvicorn.run(
+        "run:app",
+        host=settings.host,
+        port=settings.port,
+        reload=settings.hot_reload,
+    )  # Start the server

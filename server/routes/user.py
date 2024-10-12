@@ -1,30 +1,36 @@
-from __main__ import app
+from fastapi import APIRouter
 
-@app.route('/api/users', methods=['GET'])
+user_router = APIRouter(prefix="/api/users")
+
+@user_router.get("/")
 def get_users():
     # Return a list of all users
     pass
 
-@app.route('/api/users', methods=['POST'])
+
+@user_router.post("/")
 def create_user():
     # Create a new user
-    data = request.get_json()
+
     # Implement your logic here to create a new user
     pass
 
-@app.route('/api/users/<int:user_id>', methods=['GET'])
-def get_user(user_id):
+
+@user_router.get("/{user_id}")
+def get_user(user_id: str):
     # Return the user with the given ID
     pass
 
-@app.route('/api/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
+
+@user_router.put("/{user_id}")
+def update_user(user_id: str):
     # Update the user with the given ID
-    data = request.get_json()
+
     # Implement your logic here to update the user
     pass
 
-@app.route('/api/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
+
+@user_router.delete("/{user_id}")
+def delete_user(user_id: str):
     # Delete the user with the given ID
     pass
