@@ -27,7 +27,7 @@ class Roster(BaseModel):
     #: 0/1. 1 means when this roster is imported by another user, the roster and operative portraits should also be copied
     portraitcopyok: int
     viewcount: int
-    importcound: int
+    importcount: int
     #: Comma-separated list of Ploy IDs currently in use by this roster
     ployids: str
     #: Comma-separated list of TacOp IDs currently in use by this roster
