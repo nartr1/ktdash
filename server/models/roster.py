@@ -39,3 +39,6 @@ class Roster(BaseModel):
     specopnotes: str
     createddate: datetime
     operatives: List[RosterOperative]
+
+    class Config:
+        orm_mode=True

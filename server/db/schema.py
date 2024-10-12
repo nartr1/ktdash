@@ -120,7 +120,7 @@ class Faction(SQLModel, table=True):
     factionname: Optional[str] = Field(sa_type=String(250))
     description: Optional[str] = Field(sa_type=Text)
 
-    Killteam: List["Killteam"] = Relationship(back_populates="Faction_")
+    killteams: List["Killteam"] = Relationship(back_populates="Faction_")
 
 
 class Operative(SQLModel, table=True):
@@ -158,8 +158,8 @@ class Operative(SQLModel, table=True):
     fireteammax: Optional[int] = Field(sa_type=Integer, default=0)
     specialisms: Optional[str] = Field(sa_type=String(50), default="")
 
-    Ability: List["Ability"] = Relationship(back_populates="Operative_")
-    UniqueAction: List["UniqueAction"] = Relationship(back_populates="Operative_")
+    abilities: List["Ability"] = Relationship(back_populates="Operative_")
+    uniqueactions: List["UniqueAction"] = Relationship(back_populates="Operative_")
 
 
 # t_RosterOperativeView = Table(
@@ -316,7 +316,7 @@ class Weapon(SQLModel, table=True):
     weptype: Optional[str] = Field(sa_type=String(1))
     isdefault: Optional[int] = Field(sa_type=SmallInteger, default=0)
 
-    WeaponProfile: List["WeaponProfile"] = Relationship(back_populates="Weapon_")
+    weaponprofiles: List["WeaponProfile"] = Relationship(back_populates="Weapon_")
 
 
 class Ability(SQLModel, table=True):
@@ -355,7 +355,7 @@ class Ability(SQLModel, table=True):
     title: str = Field(sa_type=String(200), nullable=False)
     description: Optional[str] = Field(sa_type=Text)
 
-    Operative_: Optional["Operative"] = Relationship(back_populates="Ability")
+    Operative_: Optional["Operative"] = Relationship(back_populates="abilities")
 
 
 class Killteam(SQLModel, table=True):
@@ -383,7 +383,7 @@ class Killteam(SQLModel, table=True):
     killteamcomp: Optional[str] = Field(sa_type=Text)
     customkeyword: Optional[str] = Field(sa_type=String(250), default="")
 
-    Faction_: Optional["Faction"] = Relationship(back_populates="Killteam")
+    Faction_: Optional["Faction"] = Relationship(back_populates="killteams")
     Fireteam: List["Fireteam"] = Relationship(back_populates="Killteam_")
     Ploy: List["Ploy"] = Relationship(back_populates="Killteam_")
 
@@ -482,7 +482,7 @@ class UniqueAction(SQLModel, table=True):
     AP: Optional[int] = Field(sa_type=Integer, default=1)
     description: Optional[str] = Field(sa_type=Text)
 
-    Operative_: Optional["Operative"] = Relationship(back_populates="UniqueAction")
+    Operative_: Optional["Operative"] = Relationship(back_populates="uniqueactions")
 
 
 class UserSetting(SQLModel, table=True):
@@ -536,7 +536,7 @@ class WeaponProfile(SQLModel, table=True):
     D: Optional[str] = Field(sa_type=String(5))
     SR: Optional[str] = Field(sa_type=String(4000))
 
-    Weapon_: Optional["Weapon"] = Relationship(back_populates="WeaponProfile")
+    Weapon_: Optional["Weapon"] = Relationship(back_populates="weaponprofiles")
 
 
 class Fireteam(SQLModel, table=True):

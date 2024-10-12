@@ -9,3 +9,6 @@ class User(BaseModel):
     passhash: str
     createddate: datetime
     rosters: List[Roster]
+
+    class Config:
+        orm_mode=True

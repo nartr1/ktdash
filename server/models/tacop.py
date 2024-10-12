@@ -6,3 +6,6 @@ class TacOp(BaseModel):
     tacopseq: int
     title: str
     description: str
+
+    class Config:
+        orm_mode=True

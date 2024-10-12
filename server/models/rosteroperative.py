@@ -34,3 +34,6 @@ class Fireteam(BaseModel):
     baseoperative: Operative
     weapons: List[Weapon]
     equipments: List[Equipment]
+    
+    class Config:
+        orm_mode=True

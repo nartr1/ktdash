@@ -1,26 +1,31 @@
 from fastapi import APIRouter
 from db.engine import SessionDep
-from db.schema import Faction
+from db.schema import Faction, Killteam, Equipment, Fireteam
 from sqlmodel import select
+from models.faction import Faction as FactionResp
+from typing import List
+from fastapi.encoders import jsonable_encoder
+
+from util.transformers import rows_as_dicts
 
 killteams_router = APIRouter(prefix="/api")
 
-
-@killteams_router.get("/faction")
-def get_factions(session: SessionDep):
-    # Return an array of all factions
-    statement = select(Faction)
-    result = session.exec(statement)
-
-    results = result.fetchall()
-
-    return results
-
-
-@killteams_router.get("/faction")
-def get_faction(fa: str, session: SessionDep):
+@killteams_router.get("/faction", response_model=List[FactionResp])
+def get_faction(session: SessionDep,fa: str | None = None):
     # Return the requested faction
     faction_id = fa
+    if faction_id:
+        statement = select(Faction).where(Faction.factionid == fa).where(Faction.factionid == Killteam.factionid)
+    else:
+        statement = select(Faction)
+
+    result = session.exec(statement)
+    faction_results = result.fetchall()
+    
+    response = [FactionResp.from_orm(row, session) for row in faction_results]
+
+    return response
+
     # Implement your logic here to fetch the faction with the given ID
     pass
 
