@@ -10,5 +10,6 @@ class Weapon(BaseModel):
     opid: str
     wepid: str
     wepname: str
+    #: Weapon types: M (melee), R (ranged), P (psychic), E (Equipment)
     weptype: str
     weaponprofiles: List[WeaponProfile]

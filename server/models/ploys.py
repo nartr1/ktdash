@@ -4,6 +4,7 @@ from typing import List
 class Ploy(BaseModel):
     factionid: str
     killteamid: str
+    #: PloyTypes: S for Strategic, T for Tactical (Firefight in kt24)
     ploytype: str
     ployid: str
     ployname: str
