@@ -3,6 +3,8 @@ from typing import List
 
 from models.weapon import Weapon
 from models.equipment import Equipment
+from models.uniqueaction import UniqueAction
+from models.ability import Ability
 
 class Operative(BaseModel):
     factionid: str
@@ -19,3 +21,5 @@ class Operative(BaseModel):
     W: str
     weapons: List[Weapon]
     equipments: List[Equipment]
+    uniqueactions: List[UniqueAction]
+    abilities: List[Ability]
