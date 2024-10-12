@@ -8,7 +8,7 @@ Before you start contributing, please make sure you have the following:
 
 * Python 3.12 or later installed on your system
 * Docker installed on your system
-* The required dependencies installed using pip: `pip install -r requirements.txt`
+* The required dependencies installed using pip: `pip install -r server/requirements.txt`
 * A code editor or IDE of your choice
 * A GitHub account (if you want to submit a pull request)
 
