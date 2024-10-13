@@ -17,7 +17,7 @@ killteams_router = APIRouter(prefix="/api")
 def get_faction(session: SessionDep,fa: str):
     # Return the requested faction
 
-    statement = select(Faction).where(Faction.factionid == fa).where(Faction.factionid == Killteam.factionid)
+    statement = select(Faction).where(Faction.factionid == fa)
 
     result = session.exec(statement)
     faction_results = result.fetchall()
@@ -31,7 +31,7 @@ def get_killteam(session: SessionDep,kt: str = None):
     # Return the requested killteam
     killteam_id = kt
 
-    statement = select(Killteam).where(Killteam.killteamid == kt).where(Killteam.killteamid == Fireteam.killteamid)
+    statement = select(Killteam).where(Killteam.killteamid == kt)
 
     result = session.exec(statement)
     killteam_results = result.fetchall()
@@ -45,7 +45,7 @@ def get_killteam(session: SessionDep,kt: str = None):
 def get_fireteam(session: SessionDep, ft: str):
     # Return the requested fireteam
 
-    statement = select(Fireteam).where(Fireteam.fireteamid == ft).where(Fireteam.fireteamid == Killteam.fireteamid)
+    statement = select(Fireteam).where(Fireteam.fireteamid == ft)
     
     result = session.exec(statement)
     fireteam_results = result.fetchall()
@@ -60,8 +60,8 @@ def get_fireteam(session: SessionDep, ft: str):
 def get_operative(session: SessionDep, op: str):
     # Return the requested operative
 
-    statement = select(Operative).where(Operative.opid == op).where(Operative.opid == Killteam.opid)
-    
+    statement = select(Operative).where(Operative.opid == op)
+
     result = session.exec(statement)
     operative_results = result.fetchall()
     
