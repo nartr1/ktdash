@@ -50,8 +50,8 @@ services:
       - "3306"
     volumes:
       - "./server/db/schema.sql:/docker-entrypoint-initdb.d/1.sql"
-      - "./server/db/seed.sh:/docker-entrypoint-initdb.d/seed.sh"
       - "./server/db/dataseeding.sql:/dataseeding.sql"
+      - "./server/db/seed.sh:/docker-entrypoint-initdb.d/seed.sh"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${DB_NAME}
