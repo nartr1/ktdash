@@ -6,7 +6,7 @@ from models.settings import SETTINGS
 from fastapi import Depends
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
-engine = create_engine(url=SETTINGS.db_url,echo=True)
+engine = create_engine(url=SETTINGS.db_url,echo=True,connect_args={'connect_timeout': 10})
 Base = declarative_base()
 
 

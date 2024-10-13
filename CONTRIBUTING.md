@@ -36,6 +36,16 @@ To run just the backend and database:
 docker compose --env-file .env.dev up -d backend
 ```
 
+### Seeding the database
+
+The environment variable `SEED_DB` can be set to `True` to populate the database from the seeded data.
+Existing containers and volumes will need to be brought down first for the seeding script to run:
+```bash
+docker compose down -v
+SEED_DB=True docker compose --env-file .env.dev up -d db
+docker compose --env-file .env.dev up -d backend
+```
+
 ### Running locally
 
 The backend can be run locally (after [installing the requirements](#getting-started)) with the following:
