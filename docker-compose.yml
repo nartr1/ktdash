@@ -38,6 +38,8 @@ services:
     depends_on:
       - backend
     command: npm start
+    links:
+      - backend
   db:
     image: mysql:8.0
     restart: always
