@@ -12,6 +12,19 @@ services:
       - db
     links:
       - db
+    environment:
+      - DB_URL=${DB_URL}
+      - MESSAGE=${MESSAGE}
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - HOT_RELOAD=${HOT_RELOAD}
+      - DEBUG=${DEBUG}
+      - DB_NAME=${DB_NAME}
+      - DB_URL=${DB_URL}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
   frontend:
     build: ./ktdash_frontend
     volumes:
@@ -36,10 +49,10 @@ services:
     volumes:
       - "./server/db/schema.sql:/docker-entrypoint-initdb.d/1.sql"
     environment:
-      - MYSQL_ROOT_PASSWORD=superSecretPassword
-      - MYSQL_DATABASE=killteam
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 volumes:
   db:
     driver: local

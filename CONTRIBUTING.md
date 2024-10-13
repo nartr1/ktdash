@@ -22,15 +22,19 @@ The application can be run one of two ways:
 
 The quickest way to get the full stack up and running is by running the following at the root of this repository:
 ```bash
-docker compose up
+docker compose --env-file .env.dev up
 ```
 This will build and configure the 3 services (frontend, backend, database) from the `.env.dev` settings.
 
 To rebuild the containers without cached dependencies, use the following:
 ```bash
-docker compose build --nocache
+docker compose build --no-cache
 ```
 
+To run just the backend and database:
+```bash
+docker compose --env-file .env.dev up -d backend
+```
 
 ### Running locally
 

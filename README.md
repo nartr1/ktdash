@@ -19,5 +19,5 @@ Full API documemntation can be found at `http://localhost:8000/redoc` when runni
 
 To run the application, you will need to have docker installed on your machine. This will spin up the backend, frontend, and database containers:
 ```bash
-docker compose up
+docker compose --env-file .env.dev up
 ```
