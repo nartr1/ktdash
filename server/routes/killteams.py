@@ -14,10 +14,12 @@ from fastapi.encoders import jsonable_encoder
 killteams_router = APIRouter(prefix="/api")
 
 @killteams_router.get("/faction", response_model=List[FactionResp])
-def get_faction(session: SessionDep,fa: str):
+def get_faction(session: SessionDep,fa: str | None = None):
     # Return the requested faction
-
-    statement = select(Faction).where(Faction.factionid == fa)
+    if fa is None:
+        statement = select(Faction)
+    else:
+        statement = select(Faction).where(Faction.factionid == fa)
 
     result = session.exec(statement)
     faction_results = result.fetchall()
