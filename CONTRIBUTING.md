@@ -42,7 +42,7 @@ This will only run the backend server, so be sure to have the database container
 
 ## Documentation
 
-Documentation is automatically generated using `redoc` from the code and is accessible at `http://localhost:8000/redoc` when running the backend (both locally and through Docker).
+Documentation is automatically generated using `redoc` and `swagger` from the code and is accessible at `http://localhost:8000/redoc` or `http://localhost:8000/docs` when running the backend (both locally and through Docker).
 
 ## Code Structure
 
