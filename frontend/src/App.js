@@ -15,7 +15,6 @@ import { useRef } from 'react';
 const theme = createTheme({
   fontFamily: 'Oswald, "Arial Narrow", Roboto, sans-serif',
   primaryColor: 'orange',
-
 });
 
 function App() {

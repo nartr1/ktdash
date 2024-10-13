@@ -1,11 +1,17 @@
 import React from "react";
-import factions from '../../assets/factions.json'
 import { AspectRatio, Card, Container, Image, SimpleGrid, Text, Title } from "@mantine/core";
 import classes from './factions.module.css';
 import { Link } from "wouter";
 
 export default function Factions() {
-    const cards = factions.map((faction) => (
+    const [factions, setFactions] = React.useState([]);
+    React.useEffect(() => {
+        // Quick and dirty fetch. Replace with api hook
+        fetch('/api/faction').then(response => response.json()).then((data) => {
+            setFactions(data);
+        })
+    }, []);
+    const cards = factions?.map((faction) => (
         <Card key={faction.factionid} p="md" radius="md" component="a" href={`/fa/${faction.factionid}`} className={classes.card}>
             <AspectRatio ratio={1920 / 1080}>
                 <Image radius="md" src={`https://ktdash.app/img/portraits/${faction.factionid}/${faction.factionid}.jpg`} />
