@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 from typing import List
-import datetime
+from datetime import datetime
+
 from models.rosteroperative import RosterOperative
+
 
 class Roster(BaseModel):
     userid: str
@@ -10,7 +12,6 @@ class Roster(BaseModel):
     rostername: str
     factionid: str
     killteamid: str
-    notes: str
     keyword: str
     #: Turning Point
     TP: int
@@ -41,4 +42,4 @@ class Roster(BaseModel):
     operatives: List[RosterOperative]
 
     class Config:
-        orm_mode=True
+        orm_mode = True

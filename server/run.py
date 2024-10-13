@@ -1,16 +1,15 @@
-import uvicorn
 from collections import defaultdict
-from fastapi import FastAPI, APIRouter, status
+
+import uvicorn
+from fastapi import APIRouter, FastAPI, status
 from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import ResponseValidationError
 from fastapi.responses import JSONResponse
-from models.settings import Settings
+from models.settings import SETTINGS
 from routes.authentication import authentication_router
 from routes.killteams import killteams_router
 from routes.rosters import rosters_router
-from routes.session import sessions_router
 from routes.user import user_router
-from models.settings import SETTINGS
-from fastapi.exceptions import ResponseValidationError
 
 app = FastAPI()
 base_router = APIRouter()
@@ -19,8 +18,8 @@ app.include_router(base_router)
 app.include_router(authentication_router)
 app.include_router(killteams_router)
 app.include_router(rosters_router)
-app.include_router(sessions_router)
 app.include_router(user_router)
+
 
 @app.exception_handler(ResponseValidationError)
 async def validation_exception_handler(request, exc):
@@ -28,7 +27,9 @@ async def validation_exception_handler(request, exc):
     for pydantic_error in exc.errors():
         loc, msg = pydantic_error["loc"], pydantic_error["msg"]
         filtered_loc = list(loc[1:] if loc[0] in ("body", "query", "path") else loc)
-        field_string = ".".join([str(x) for x in filtered_loc])  # nested fields with dot-notation
+        field_string = ".".join(
+            [str(x) for x in filtered_loc]
+        )  # nested fields with dot-notation
         reformatted_message[field_string].append(msg)
 
     return JSONResponse(
@@ -38,9 +39,13 @@ async def validation_exception_handler(request, exc):
         ),
     )
 
-@base_router.get("/")  # When someone goes to / on the server, execute the following function
+
+@base_router.get(
+    "/"
+)  # When someone goes to / on the server, execute the following function
 def home():
     return "Hello, World!"  # Return this message back to the browser
+
 
 if (
     __name__ == "__main__"

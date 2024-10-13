@@ -5,7 +5,8 @@ from models.operative import Operative
 from models.weapon import Weapon
 from models.equipment import Equipment
 
-class Fireteam(BaseModel):
+
+class RosterOperative(BaseModel):
     rosterid: str
     userid: str
     rosteropid: str
@@ -34,6 +35,6 @@ class Fireteam(BaseModel):
     baseoperative: Operative
     weapons: List[Weapon]
     equipments: List[Equipment]
-    
+
     class Config:
-        orm_mode=True
+        orm_mode = True
