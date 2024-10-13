@@ -8,6 +8,12 @@ from models.equipment import Equipment
 from models.fireteam import Fireteam
 from models.ploys import Ploys
 
+
+class KillteamShort(BaseModel):
+    killteamid: str
+    killteamname: str
+    killteamversion: str | None
+
 class Killteam(BaseModel):
     factionid: str
     killteamid: str

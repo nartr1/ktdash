@@ -1,28 +1,27 @@
 from pydantic import BaseModel, Field
 from typing import List
 
+from models.killteam import KillteamShort
+
 class Faction(BaseModel):
     factionid: str
     factionname: str
     description: str
-    killteamids: List[str]
-    killteamnames: List[str]
+    killteams: List[KillteamShort]
+    
     class Config:
         orm_mode=True
 
     @staticmethod
     def from_orm(orm_row, session):
-        killteamids = []
-        killteamnames = []
+        killteams = []
 
         for row in orm_row.killteams:
-            killteamids.append(row.killteamid)
-            killteamnames.append(row.killteamname)
+            killteams.append(KillteamShort(killteamid=row.killteamid, killteamname=row.killteamname, killteamversion=row.edition))
 
         return Faction(
             factionid=orm_row.factionid,
             factionname=orm_row.factionname,
             description=orm_row.description,
-            killteamids=killteamids,
-            killteamnames=killteamnames
+            killteams=killteams,
         )
