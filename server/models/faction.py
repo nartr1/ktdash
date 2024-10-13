@@ -19,4 +19,3 @@ class Faction(BaseModel):
             description=orm_row.description,
             killteams=[Killteam.from_orm(row, session) for row in orm_row.killteams]
         )
-        pass
