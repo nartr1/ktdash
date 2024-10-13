@@ -26,9 +26,9 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
   frontend:
-    build: ./ktdash_frontend
+    build: ./frontend
     volumes:
-      - ./ktdash_frontend:/app
+      - ./frontend:/app
       # One-way volume to use node_modules from inside image
       - /app/node_modules
     ports:
