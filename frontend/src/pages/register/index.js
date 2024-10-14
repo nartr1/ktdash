@@ -1,11 +1,22 @@
-import { PasswordInput, Group, Container, TextInput, Stack, Button } from '@mantine/core';
+import { PasswordInput, Container, TextInput, Stack, Button } from '@mantine/core';
 import { useInputState } from '@mantine/hooks';
+import useAuth from '../../hooks/use-auth';
+import { useLocation } from 'wouter';
 
 
 export default function Register() {
+    const { signup } = useAuth();
+    const [, navigate] = useLocation();
     const [username, setUsername] = useInputState('');
     const [password, setPassword] = useInputState('');
     const [password2, setPassword2] = useInputState('');
+
+    const submit = async () => {
+        const success = await signup(username, password);
+        if (success) {
+            navigate('/');
+        }
+    }
 
     return (
         <Container py="md">
@@ -31,7 +42,7 @@ export default function Register() {
                     label="Confirm Password"
                     required
                 />
-                <Button>Sign Up</Button>
+                <Button onClick={() => submit(username, password)}>Sign Up</Button>
             </Stack>
         </Container>
     );

@@ -1,52 +1,38 @@
+import { useLocalStorage } from "@mantine/hooks";
 import React from "react";
 
 const API_PATH = "/api";
 
 export function useAPI() {
-    const get = React.useCallback((endpoint) => {
-        return fetch(`${API_PATH}${endpoint}`).then(response => response.json());
-    }, []);
-    const post = React.useCallback((endpoint, body) => {
+    const [authToken] = useLocalStorage({ key: 'token' });
+    const request = React.useCallback((endpoint, content) => {
         return fetch(`${API_PATH}${endpoint}`, {
-            method: "POST",
-            body: JSON.stringify(body),
+            method: "GET",
+            ...content,
+            headers: {
+                ...content?.headers,
+                Authorization: authToken ? `Bearer ${authToken}` : undefined
+            }
         }).then(response => response.json());
-    }, []);
-    return { get, post }
+    }, [authToken]);
+    return { request }
 }
 
-export function useGet(endpoint) {
+export function useRequest(endpoint, content) {
     const [data, setData] = React.useState(null);
     const [error, setError] = React.useState(null);
     const [isFetching, setIsFetching] = React.useState(false);
     const api = useAPI();
     React.useEffect(() => {
         setIsFetching(true);
-        api.get(endpoint).then((data) => {
+        api.request(endpoint, content).then((data) => {
             setData(data);
             setIsFetching(false);
         }).catch((e) => {
             setError(e);
             setIsFetching(false);
         })
-    }, []);
-    return { data, error, isFetching }
-}
-
-export function usePost(endpoint, body) {
-    const [data, setData] = React.useState(null);
-    const [error, setError] = React.useState(null);
-    const [isFetching, setIsFetching] = React.useState(false);
-    const api = useAPI();
-    React.useEffect(() => {
-        setIsFetching(true);
-        api.post(endpoint, body).then((data) => {
-            setData(data);
-            setIsFetching(false);
-        }).catch((e) => {
-            setError(e);
-            setIsFetching(false);
-        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return { data, error, isFetching }
 }

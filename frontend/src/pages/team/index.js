@@ -1,11 +1,13 @@
-import { Link, useRoute } from "wouter";
-import { useGet } from "../../hooks/use-api";
-import { AspectRatio, Box, Card, Container, Flex, Group, Image, LoadingOverlay, SimpleGrid, Stack, Tabs, Text, Title } from "@mantine/core";
+import { useRoute } from "wouter";
+import { useRequest } from "../../hooks/use-api";
+import { Box, Button, Card, Container, Image, LoadingOverlay, SimpleGrid, Stack, Tabs, Text, Title } from "@mantine/core";
 import { convertShapes } from "../../utils/shapes";
+import OperativeCard from "../../components/operative-card";
+import { modals } from '@mantine/modals';
 
 export default function Faction() {
-    const [match, params] = useRoute("/fa/:factionId/kt/:killteamId");
-    const { data: killteam, isFetching: isFetchinigTeam } = useGet(`/killteam?kt=${params?.killteamId}`);
+    const [, params] = useRoute("/fa/:factionId/kt/:killteamId");
+    const { data: killteam, isFetching: isFetchinigTeam } = useRequest(`/killteam?kt=${params?.killteamId}`);
     const teamData = killteam?.[0];
     if (isFetchinigTeam) {
         return (<LoadingOverlay visible={isFetchinigTeam} />);
@@ -13,19 +15,28 @@ export default function Faction() {
     if (!teamData) {
         return;
     }
+    const showTeamComp = () =>
+        modals.open({
+            title: 'Team Composition',
+            children: (
+                <div dangerouslySetInnerHTML={{ __html: `${teamData.killteamcomp}` }} />
+            ),
+        });
+
     return (
         <Container py="md" px="md" fluid>
             <Stack>
                 <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-                    <Image fit="cover" style={{ objectPosition: "top" }} h={300} radius="md" src={`https://ktdash.app/img/portraits/${params?.factionId}/${params?.killteamId}/${params?.killteamId}.jpg`} />
-                    <div justify="flex-start" align="flex-start" grow={1}>
+                    <Image fit="cover" style={{ objectPosition: "top" }} h={300} radius="md" src={`/img/portraits/${params?.factionId}/${params?.killteamId}/${params?.killteamId}.jpg`} />
+                    <Stack justify="flex-start" align="flex-start">
                         <Title>
                             {teamData?.killteamname}
                         </Title>
                         <Text>
                             <div dangerouslySetInnerHTML={{ __html: `${teamData.description}` }} />
                         </Text>
-                    </div>
+                        <Button onClick={showTeamComp}>Team Composition</Button>
+                    </Stack>
                 </SimpleGrid>
                 <Tabs defaultValue="operatives">
                     <Tabs.List grow>
@@ -47,20 +58,7 @@ export default function Faction() {
                                     {!!(teamData?.fireteams?.length > 1) && <Title order={3}>{fireteam.fireteamname}</Title>}
                                     <SimpleGrid mt="md" cols={{ base: 1, md: 2, xl: 3 }} spacing="md">
                                         {fireteam?.operatives?.map((operative) => (
-                                            <Card>
-                                                <Stack>
-                                                    <Title order={3}>{operative.opname}</Title>
-                                                    <SimpleGrid cols={{ base: 2 }}>
-                                                        <Image fit="cover" style={{ objectPosition: "top" }} h={140} radius="md" src={`https://ktdash.app/img/portraits/${params?.factionId}/${params?.killteamId}/${params?.killteamId}/${operative?.opid}.jpg`} />
-                                                        <SimpleGrid mt="md" cols={{ base: 2 }} spacing="md">
-                                                            <Flex>APL: {operative.APL}</Flex>
-                                                            <Flex>M: <span dangerouslySetInnerHTML={{ __html: `${convertShapes(operative.M)}` }} /></Flex>
-                                                            <Flex>SV: {operative.SV}</Flex>
-                                                            <Flex>W: {operative.W}</Flex>
-                                                        </SimpleGrid>
-                                                    </SimpleGrid>
-                                                </Stack>
-                                            </Card>
+                                            <OperativeCard operative={operative} />
                                         ))}
                                     </SimpleGrid>
                                 </>
@@ -91,14 +89,16 @@ export default function Faction() {
                         </SimpleGrid>
                     </Tabs.Panel>
                     <Tabs.Panel value="equipment">
-                            <SimpleGrid mt="md" cols={{ base: 1, sm: 2 }} spacing="md">
-                                {teamData?.equipments?.map((equip) => (
-                                    <Card>
+                        <SimpleGrid mt="md" cols={{ base: 1, sm: 2 }} spacing="md">
+                            {teamData?.equipments?.map((equip) => (
+                                <Card>
+                                    <Stack>
                                         <Title order={3}>{equip.eqname}</Title>
                                         <div dangerouslySetInnerHTML={{ __html: `${convertShapes(equip.eqdescription)}` }} />
-                                    </Card>
-                                ))}
-                            </SimpleGrid>
+                                    </Stack>
+                                </Card>
+                            ))}
+                        </SimpleGrid>
                     </Tabs.Panel>
                 </Tabs>
             </Stack>

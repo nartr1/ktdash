@@ -1,10 +1,11 @@
-import { Link, useRoute } from "wouter";
-import { useGet } from "../../hooks/use-api";
-import { Container, Image, LoadingOverlay, SimpleGrid, Stack, Text, Title } from "@mantine/core";
+import { useRoute } from "wouter";
+import { useRequest } from "../../hooks/use-api";
+import { Card, Container, Image, LoadingOverlay, SimpleGrid, Stack, Tabs, Text, Title } from "@mantine/core";
+import classes from './faction.module.css';
 
 export default function Faction() {
-    const [match, params] = useRoute("/fa/:factionId");
-    const { data: faction, isFetching: isFetchingFaction } = useGet(`/faction?fa=${params?.factionId}`);
+    const [, params] = useRoute("/fa/:factionId");
+    const { data: faction, isFetching: isFetchingFaction } = useRequest(`/faction?fa=${params?.factionId}`);
     const factionData = faction?.[0];
     if (isFetchingFaction) {
         return (<LoadingOverlay visible={isFetchingFaction} />);
@@ -12,26 +13,59 @@ export default function Faction() {
     if (!factionData) {
         return;
     }
+    console.log(factionData);
+    const cards2021 = factionData.killteams?.filter((killteam) => killteam.killteamversion === "kt21")?.map((killteam) => (
+        <Card key={killteam.killteamid} className={classes.card} p="md" radius="md" component="a" href={`/fa/${factionData.factionid}/kt/${killteam.killteamid}`}>
+            <Card.Section inheritPadding py="xs">
+                <Title order={3}>{killteam.killteamname} (2021)</Title>
+            </Card.Section>
+            <Image fit="cover" style={{ objectPosition: "top" }} radius="md" src={`/img/portraits/${factionData.factionid}/${killteam.killteamid}/${killteam.killteamid}.jpg`} />
+        </Card>
+    ));
+    const cards2024 = factionData.killteams?.filter((killteam) => killteam.killteamversion === "kt24")?.map((killteam) => (
+        <Card key={killteam.killteamid} className={classes.card} p="md" radius="md" component="a" href={`/fa/${factionData.factionid}/kt/${killteam.killteamid}`}>
+            <Card.Section inheritPadding py="xs">
+                <Title order={3}>{killteam.killteamname} (2024)</Title>
+            </Card.Section>
+            <Image fit="cover" style={{ objectPosition: "top" }} radius="md" src={`/img/portraits/${factionData.factionid}/${killteam.killteamid}/${killteam.killteamid}.jpg`} />
+        </Card>
+    ));
     return (
-        <Container py="md" px="md" fluid>
+        <Container px="md" pb="md" fluid>
             <Stack>
-                <SimpleGrid mt="md" cols={{ base: 1, sm: 2 }} spacing="md">
-                    <Image fit="cover" style={{ objectPosition: "top" }} h={300} radius="md" src={`https://ktdash.app/img/portraits/${params?.factionId}/${params?.factionId}.jpg`} />
-                    <div justify="flex-start" align="flex-start" grow={1}>
+                <SimpleGrid my="md" cols={{ base: 1, sm: 2 }} spacing="md">
+                    <Image fit="cover" style={{ objectPosition: "top" }} h={300} radius="md" src={`/img/portraits/${params?.factionId}/${params?.factionId}.jpg`} />
+                    <Stack justify="flex-start" align="flex-start" grow={1}>
                         <Title>
                             {factionData?.factionname}
                         </Title>
                         <Text>
                             <div dangerouslySetInnerHTML={{ __html: `${factionData.description}` }} />
                         </Text>
-                    </div>
+                    </Stack>
                 </SimpleGrid>
-                <Text>
-                    <SimpleGrid mt="md" cols={{ base: 2 }} spacing={4}>
-                        {factionData?.killteams.map((kt) => (
-                            <Link href={`/fa/${factionData.factionid}/kt/${kt.killteamid}`} size="xs" fw={700} mt="md">{kt.killteamname}</Link>))}
-                    </SimpleGrid>
-                </Text>
+                <Tabs defaultValue="kt24">
+                    <Stack>
+                        <Tabs.List grow>
+                            <Tabs.Tab value="kt21">
+                                KT2021
+                            </Tabs.Tab>
+                            <Tabs.Tab value="kt24">
+                                KT2024
+                            </Tabs.Tab>
+                        </Tabs.List>
+                        <Tabs.Panel value="kt21">
+                            <SimpleGrid cols={{ base: 1, sm: 2, xl: 3 }}>
+                                {cards2021}
+                            </SimpleGrid>
+                        </Tabs.Panel>
+                        <Tabs.Panel value="kt24">
+                            <SimpleGrid cols={{ base: 1, sm: 2, xl: 3 }}>
+                                {cards2024}
+                            </SimpleGrid>
+                        </Tabs.Panel>
+                    </Stack>
+                </Tabs>
             </Stack>
         </Container>
     );
