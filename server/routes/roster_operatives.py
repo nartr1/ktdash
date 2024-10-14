@@ -1,11 +1,5 @@
-from fastapi import APIRouter
-from rosters import rosters_router
+from routes.rosters import rosters_router
 from db.engine import SessionDep
-
-@rosters_router.get("/{roster_id}/operatives")
-def get_roster_operatives(roster_id: str, session: SessionDep):
-    # Return a list of all operatives in the roster
-    pass
 
 
 @rosters_router.post("/{roster_id}/operatives")
