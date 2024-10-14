@@ -47,7 +47,7 @@ class User:
         return user
 
 
-def get_current_user(
+def get_current_user_with_session(
     session: SessionDep, token: Annotated[str, Depends(oauth2_scheme)]
 ):
     credentials_exception = HTTPException(

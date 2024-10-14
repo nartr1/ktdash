@@ -9,6 +9,7 @@ from models.settings import SETTINGS
 from routes.authentication import authentication_router
 from routes.killteams import killteams_router
 from routes.rosters import rosters_router
+from routes.roster_operatives import roster_op_router
 from routes.user import user_router
 
 app = FastAPI()
@@ -18,6 +19,7 @@ app.include_router(base_router)
 app.include_router(authentication_router)
 app.include_router(killteams_router)
 app.include_router(rosters_router)
+app.include_router(roster_op_router)
 app.include_router(user_router)
 
 

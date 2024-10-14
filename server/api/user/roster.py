@@ -1,7 +1,7 @@
 import uuid
 
-from db.schema import Roster, User
-from models.roster import CreateRoster
+from db.schema import RosterOperative, Roster, User
+from models.roster import CreateRoster, Roster as RosterModel
 from sqlmodel import select
 
 
@@ -9,11 +9,21 @@ class RosterAPI:
 
     @staticmethod
     def get_roster(roster_id: str, session):
-        query = select(Roster).where(Roster.rosterid == roster_id)
-        roster_row = session.exec(query).fetchall()
-        if roster_row is None or len(roster_row) == 0:
+        query = select(Roster, RosterOperative).where(
+            Roster.rosterid == roster_id, RosterOperative.rosterid == roster_id
+        )
+        roster_rows = session.exec(query).fetchall()
+
+        if roster_rows is None or len(roster_rows) == 0:
             return None
-        return roster_row
+
+        roster = roster_rows[0][0]
+        operatives = {row[1].opid: row[1].dict() for row in roster_rows}
+
+        return RosterModel(
+            **roster.dict(),
+            operatives=list(operatives.values()),
+        )
 
     @staticmethod
     def create_roster(roster_args: CreateRoster, user: User, session):

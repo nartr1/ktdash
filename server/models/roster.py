@@ -1,14 +1,34 @@
-from pydantic import BaseModel
-from typing import List
 from datetime import datetime
+from typing import List
 
 from models.rosteroperative import RosterOperative
+from pydantic import BaseModel
 
 
 class CreateRoster(BaseModel):
     rostername: str
     factionid: str
     killteamid: str
+
+
+class GetRosters(BaseModel):
+    count: int
+    showcase: bool
+    factionid: str
+    killteamid: str
+
+
+class RosterShort(BaseModel):
+    rosterid: str
+    rostername: str
+    userid: str
+    portrait: str
+    notes: str | None
+    factionid: str | None
+    killteamid: str | None
+    viewcount: int
+    importcount: int
+    showcase: bool
 
 
 class Roster(BaseModel):

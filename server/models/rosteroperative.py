@@ -1,9 +1,30 @@
-from pydantic import BaseModel
 from typing import List
 
+from models.equipment import Equipment
 from models.operative import Operative
 from models.weapon import Weapon
-from models.equipment import Equipment
+from pydantic import BaseModel
+
+
+class AddRosterOperative(BaseModel):
+    baseopid: str
+    opname: str
+    factionid: str
+    killteamid: str
+    fireteamid: str
+    wepids: str
+    eqids: str
+
+
+class RosterOperativeShort(BaseModel):
+    rosteropid: str
+    opname: str
+
+    baseoperative: Operative
+    wepids: str
+    eqids: str
+
+    specialism: str
 
 
 class RosterOperative(BaseModel):
