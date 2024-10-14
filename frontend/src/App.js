@@ -1,4 +1,4 @@
-import { createTheme, Image, MantineProvider, Title } from '@mantine/core';
+import { Container, createTheme, Image, MantineProvider, Title } from '@mantine/core';
 import { AppShell, Burger, Group } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { useDisclosure } from '@mantine/hooks';
