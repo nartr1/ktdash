@@ -1,37 +1,30 @@
 import React from "react";
-import { AspectRatio, Card, Container, Image, SimpleGrid, Text, Title } from "@mantine/core";
+import { Card, Container, Image, LoadingOverlay, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import classes from './factions.module.css';
-import { Link } from "wouter";
+import { useRequest } from "../../hooks/use-api";
 
 export default function Factions() {
-    const [factions, setFactions] = React.useState([]);
-    React.useEffect(() => {
-        // Quick and dirty fetch. Replace with api hook
-        fetch('/api/faction').then(response => response.json()).then((data) => {
-            setFactions(data);
-        })
-    }, []);
+    const { data: factions, isFetching: isFetchingFactions } = useRequest("/faction");
     const cards = factions?.map((faction) => (
-        <Card key={faction.factionid} p="md" radius="md" component="a" href={`/fa/${faction.factionid}`} className={classes.card}>
-            <AspectRatio ratio={1920 / 1080}>
-                <Image radius="md" src={`https://ktdash.app/img/portraits/${faction.factionid}/${faction.factionid}.jpg`} />
-            </AspectRatio>
-            <Title className={classes.title} mt={5}>
-                {faction.factionname}
-            </Title>
-            <Text size="xs" fw={700} mt="md">
-                {faction.description}
-            </Text>
-            <SimpleGrid mt="md" cols={{ base: 1, sm: 2, xl: 3 }}>
-                {faction.killteams.map((kt) => (
-                    <Link href={`/fa/${faction.factionid}/kt/${kt.killteamid}`} size="xs" fw={700} mt="md">{kt.killteamname}</Link>))}
-            </SimpleGrid>
+        <Card key={faction.factionid} p="md" radius="md" component="a" className={classes.card} href={`/fa/${faction.factionid}`}>
+            <Stack>
+                <Image radius="md" src={`/img/portraits/${faction.factionid}/${faction.factionid}.jpg`} />
+                <Title className={classes.title} mt={5}>{faction.factionname}</Title>
+                <Text>
+                    <div dangerouslySetInnerHTML={{ __html: `${faction.description}` }} />
+                </Text>
+            </Stack>
         </Card>
     ));
+    if (isFetchingFactions) {
+        return (<LoadingOverlay visible={isFetchingFactions} />);
+    }
 
     return (
         <Container py="md" px="md" fluid>
-            <SimpleGrid cols={{ base: 1, sm: 2, xl: 3 }}>{cards}</SimpleGrid>
+            <SimpleGrid cols={{ base: 1, md: 2, lg: 3, xl: 4 }}>
+                {cards}
+            </SimpleGrid>
         </Container>
     );
 }
