@@ -22,15 +22,29 @@ The application can be run one of two ways:
 
 The quickest way to get the full stack up and running is by running the following at the root of this repository:
 ```bash
-docker compose up
+docker compose --env-file .env.dev up
 ```
 This will build and configure the 3 services (frontend, backend, database) from the `.env.dev` settings.
 
 To rebuild the containers without cached dependencies, use the following:
 ```bash
-docker compose build --nocache
+docker compose build --no-cache
 ```
 
+To run just the backend and database:
+```bash
+docker compose --env-file .env.dev up -d backend
+```
+
+### Seeding the database
+
+The environment variable `SEED_DB` can be set to `True` to populate the database from the seeded data.
+Existing containers and volumes will need to be brought down first for the seeding script to run:
+```bash
+docker compose down -v
+SEED_DB=True docker compose --env-file .env.dev up -d db
+docker compose --env-file .env.dev up -d backend
+```
 
 ### Running locally
 
@@ -42,7 +56,7 @@ This will only run the backend server, so be sure to have the database container
 
 ## Documentation
 
-Documentation is automatically generated using `redoc` from the code and is accessible at `http://localhost:8000/redoc` when running the backend (both locally and through Docker).
+Documentation is automatically generated using `redoc` and `swagger` from the code and is accessible at `http://localhost:8000/redoc` or `http://localhost:8000/docs` when running the backend (both locally and through Docker).
 
 ## Code Structure
 

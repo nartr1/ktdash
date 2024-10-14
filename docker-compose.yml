@@ -12,10 +12,23 @@ services:
       - db
     links:
       - db
+    environment:
+      - DB_URL=${DB_URL}
+      - MESSAGE=${MESSAGE}
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - HOT_RELOAD=${HOT_RELOAD}
+      - DEBUG=${DEBUG}
+      - DB_NAME=${DB_NAME}
+      - DB_URL=${DB_URL}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
   frontend:
-    build: ./ktdash_frontend
+    build: ./frontend
     volumes:
-      - ./ktdash_frontend:/app
+      - ./frontend:/app
       # One-way volume to use node_modules from inside image
       - /app/node_modules
     ports:
@@ -25,6 +38,8 @@ services:
     depends_on:
       - backend
     command: npm start
+    links:
+      - backend
   db:
     image: mysql:8.0
     restart: always
@@ -35,11 +50,15 @@ services:
       - "3306"
     volumes:
       - "./server/db/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "./server/db/dataseeding.sql:/dataseeding.sql"
+      - "./server/db/seed.sh:/docker-entrypoint-initdb.d/seed.sh"
     environment:
-      - MYSQL_ROOT_PASSWORD=superSecretPassword
-      - MYSQL_DATABASE=killteam
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - SEED_DB=${SEED_DB}
+      - DB_NAME=${DB_NAME}
 volumes:
   db:
     driver: local
