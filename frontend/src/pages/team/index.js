@@ -1,6 +1,6 @@
 import { Link, useRoute } from "wouter";
 import { useGet } from "../../hooks/use-api";
-import { AspectRatio, Box, Card, Container, Group, Image, LoadingOverlay, SimpleGrid, Stack, Tabs, Text, Title } from "@mantine/core";
+import { AspectRatio, Box, Card, Container, Flex, Group, Image, LoadingOverlay, SimpleGrid, Stack, Tabs, Text, Title } from "@mantine/core";
 
 export default function Faction() {
     const [match, params] = useRoute("/fa/:factionId/kt/:killteamId");
@@ -15,7 +15,7 @@ export default function Faction() {
     return (
         <Container py="md" px="md" fluid>
             <Stack>
-                <SimpleGrid mt="md" cols={{ base: 1, sm: 2 }} spacing="md">
+                <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
                     <Image fit="cover" style={{ objectPosition: "top" }} h={300} radius="md" src={`https://ktdash.app/img/portraits/${params?.factionId}/${params?.killteamId}/${params?.killteamId}.jpg`} />
                     <div justify="flex-start" align="flex-start" grow={1}>
                         <Title>
@@ -47,13 +47,18 @@ export default function Faction() {
                                     <SimpleGrid mt="md" cols={{ base: 1, md: 2, xl: 3 }} spacing="md">
                                         {fireteam?.operatives?.map((operative) => (
                                             <Card>
-                                                <Title order={3}>{operative.opname}</Title>
-                                                <Group>
-                                                    <Image fit="cover" style={{ objectPosition: "top" }} h={140} radius="md" src={`https://ktdash.app/img/portraits/${params?.factionId}/${params?.killteamId}/${params?.killteamId}/${operative?.opid}.jpg`} />
-                                                    <SimpleGrid mt="md" cols={{ base: 1, sm: 2 }} spacing="md">
-                                                        M: {operative.M}
+                                                <Stack>
+                                                    <Title order={3}>{operative.opname}</Title>
+                                                    <SimpleGrid cols={{ base: 2 }}>
+                                                        <Image fit="cover" style={{ objectPosition: "top" }} h={140} radius="md" src={`https://ktdash.app/img/portraits/${params?.factionId}/${params?.killteamId}/${params?.killteamId}/${operative?.opid}.jpg`} />
+                                                        <SimpleGrid mt="md" cols={{ base: 2 }} spacing="md">
+                                                            <Flex>APL: {operative.APL}</Flex>
+                                                            <Flex>M: {operative.M}</Flex>
+                                                            <Flex>SV: {operative.SV}</Flex>
+                                                            <Flex>W: {operative.W}</Flex>
+                                                        </SimpleGrid>
                                                     </SimpleGrid>
-                                                </Group>
+                                                </Stack>
                                             </Card>
                                         ))}
                                     </SimpleGrid>
