@@ -1,5 +1,10 @@
-from fastapi import APIRouter
+from typing import Annotated
+from fastapi import APIRouter, Depends
 from db.engine import SessionDep
+from models.user import User
+from models.roster import CreateRoster
+from api.user.user import get_current_user
+from api.user.roster import RosterAPI
 
 rosters_router = APIRouter(prefix="/api/rosters")
 
@@ -11,11 +16,12 @@ def get_rosters(session: SessionDep):
 
 
 @rosters_router.post("/")
-def create_roster(session: SessionDep):
+def create_roster(
+    roster: CreateRoster,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
     # Create a new roster
-
-    # Implement your logic here to create a new roster
-    pass
+    return RosterAPI.create_roster(roster, current_user[0], current_user[1])
 
 
 @rosters_router.get("/{roster_id}")

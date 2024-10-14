@@ -26,7 +26,7 @@ def login_for_access_token(
         )
     access_token_expires = timedelta(minutes=SETTINGS.access_token_expire_minutes)
     access_token = TokenManager.create_access_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
+        data={"sub": user.userid}, expires_delta=access_token_expires
     )
     return Token(access_token=access_token, token_type="bearer")
 

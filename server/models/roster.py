@@ -5,6 +5,12 @@ from datetime import datetime
 from models.rosteroperative import RosterOperative
 
 
+class CreateRoster(BaseModel):
+    rostername: str
+    factionid: str
+    killteamid: str
+
+
 class Roster(BaseModel):
     userid: str
     rosterid: str
@@ -14,13 +20,13 @@ class Roster(BaseModel):
     killteamid: str
     keyword: str
     #: Turning Point
-    TP: int
+    TP: int | None
     #: Command Points
-    CP: int
+    CP: int | None
     #: Victory Points
-    VP: int
+    VP: int | None
     #: Resource Points (e.g. Faith Points for Novitiates)
-    RP: int
+    RP: int | None
     #: 0/1. 1 means this roster has been spotlighted
     spotlight: int
     #: 0/1. 1 means this roster has a custom portrait image
