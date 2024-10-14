@@ -1,6 +1,7 @@
 import { Link, useRoute } from "wouter";
 import { useGet } from "../../hooks/use-api";
 import { AspectRatio, Box, Card, Container, Flex, Group, Image, LoadingOverlay, SimpleGrid, Stack, Tabs, Text, Title } from "@mantine/core";
+import { convertShapes } from "../../utils/shapes";
 
 export default function Faction() {
     const [match, params] = useRoute("/fa/:factionId/kt/:killteamId");
@@ -53,7 +54,7 @@ export default function Faction() {
                                                         <Image fit="cover" style={{ objectPosition: "top" }} h={140} radius="md" src={`https://ktdash.app/img/portraits/${params?.factionId}/${params?.killteamId}/${params?.killteamId}/${operative?.opid}.jpg`} />
                                                         <SimpleGrid mt="md" cols={{ base: 2 }} spacing="md">
                                                             <Flex>APL: {operative.APL}</Flex>
-                                                            <Flex>M: {operative.M}</Flex>
+                                                            <Flex>M: <span dangerouslySetInnerHTML={{ __html: `${convertShapes(operative.M)}` }} /></Flex>
                                                             <Flex>SV: {operative.SV}</Flex>
                                                             <Flex>W: {operative.W}</Flex>
                                                         </SimpleGrid>
@@ -90,7 +91,14 @@ export default function Faction() {
                         </SimpleGrid>
                     </Tabs.Panel>
                     <Tabs.Panel value="equipment">
-                        Equipment stuff
+                            <SimpleGrid mt="md" cols={{ base: 1, sm: 2 }} spacing="md">
+                                {teamData?.equipments?.map((equip) => (
+                                    <Card>
+                                        <Title order={3}>{equip.eqname}</Title>
+                                        <div dangerouslySetInnerHTML={{ __html: `${convertShapes(equip.eqdescription)}` }} />
+                                    </Card>
+                                ))}
+                            </SimpleGrid>
                     </Tabs.Panel>
                 </Tabs>
             </Stack>
