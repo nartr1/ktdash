@@ -55,12 +55,12 @@ export default function Faction() {
                             </Tabs.Tab>
                         </Tabs.List>
                         <Tabs.Panel value="kt21">
-                            <SimpleGrid cols={{ base: 1, sm: 2, xl: 3 }}>
+                            <SimpleGrid cols={{ base: 1, sm: 2, lg: 3, xl: 4 }}>
                                 {cards2021}
                             </SimpleGrid>
                         </Tabs.Panel>
                         <Tabs.Panel value="kt24">
-                            <SimpleGrid cols={{ base: 1, sm: 2, xl: 3 }}>
+                            <SimpleGrid cols={{ base: 1, sm: 2, lg: 3, xl: 4 }}>
                                 {cards2024}
                             </SimpleGrid>
                         </Tabs.Panel>

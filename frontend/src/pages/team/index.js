@@ -56,7 +56,7 @@ export default function Faction() {
                             {teamData?.fireteams?.map((fireteam) => (
                                 <>
                                     {!!(teamData?.fireteams?.length > 1) && <Title order={3}>{fireteam.fireteamname}</Title>}
-                                    <SimpleGrid mt="md" cols={{ base: 1, md: 2, xl: 3 }} spacing="md">
+                                    <SimpleGrid mt="md" cols={{ base: 1, sm: 2, lg: 3, xl: 4 }} spacing="md">
                                         {fireteam?.operatives?.map((operative) => (
                                             <OperativeCard operative={operative} />
                                         ))}
